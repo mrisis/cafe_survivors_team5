@@ -6,4 +6,4 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../cafe.db'
 db = SQLAlchemy(app)
 
-
+from cafe import routes
