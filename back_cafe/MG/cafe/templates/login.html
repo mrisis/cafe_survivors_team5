@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block body %}
+    <section class="bg-dark mt-5">
+    <div class="container pt-5">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-light text-dark" style="border-radius: 1rem;">
+                    <div class="card-body text-center">
+
+                        <div class="mb-md-4">
+
+                            <h2 class="fw-bold text-uppercase">Login</h2>
+                            <p class="text-dark-50 mb-4">Please enter your login and password!</p>
+
+                            <div class="form-outline form-white mb-3">
+                                <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="Email"/>
+                            </div>
+
+                            <div class="form-outline form-white mb-2">
+                                <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Password" />
+                            </div>
+
+
+                            <button class="btn btn-outline-dark btn-lg mt-2" type="submit">Login</button>
+                        </div>
+
+                        <div>
+                            <p class="small"><a class="text-dark text-decoration-none" href="#">Forgot password?</a></p>
+                            <p class="">Don't have an account? <a href="signup.html" class="text-dark-50 fw-bold text-decoration-none">Sign Up</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
