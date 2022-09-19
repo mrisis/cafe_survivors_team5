@@ -32,13 +32,13 @@ SignUp page
                 <h2 class="fw-bold text-uppercase text-center mb-4">Sign up</h2>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-{#                    <input type="text" id="form3Example1" class="form-control" placeholder="First name" />#}
+
 										{{ form.first_name(class="form-control", placeholder="First name") }}
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
                   <div class="form-outline">
-{#                    <input type="text" id="form3Example2" class="form-control" placeholder="Last name"/>#}
+
 										{{ form.last_name(class="form-control", placeholder="Last name") }}
                   </div>
                 </div>
@@ -46,24 +46,24 @@ SignUp page
 
               <!-- Email input -->
               <div class="form-outline mb-4">
-{#                <input type="email" id="form3Example3" class="form-control" placeholder="Email address"/>#}
+
 								{{ form.email(class="form-control", placeholder="Email") }}
               </div>
 
               <!-- Email input -->
               <div class="form-outline mb-4">
-{#                <input type="text" id="form3Example4" class="form-control" placeholder="Phone number"/>#}
+
 								{{ form.phone(class="form-control", placeholder="Phone number") }}
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-{#                <input type="password" id="form3Example5" class="form-control" placeholder="Password"/>#}
+
 								{{ form.password(class="form-control", placeholder="Password") }}
               </div>
 
 							<div class="form-outline mb-4">
-{#                <input type="password" id="form3Example5" class="form-control" placeholder="Password"/>#}
+
 								{{ form.confirm_pass(class="form-control", placeholder="Confirm Password") }}
               </div>
 
