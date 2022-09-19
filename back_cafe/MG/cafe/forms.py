@@ -26,3 +26,10 @@ class SignupForm(FlaskForm):
         if user:
             raise ValidationError("This Phone number is already exist.")
 
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember')
+
+
