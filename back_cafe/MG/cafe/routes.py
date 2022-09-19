@@ -20,3 +20,8 @@ def login():
 @app.route('/order')
 def order():
     return render_template('order.html')
+
+
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
