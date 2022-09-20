@@ -15,8 +15,8 @@ class Users(db.Model, UserMixin):
     phone_number = db.Column(db.String(11), unique=True, nullable=False)
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    orders = db.relationship("Orders", backref="author", lazy=True)
-    tables = db.relationship("Tables", backref="author", lazy=True)
+    orders = db.relationship("Orders", backref="customer", lazy=True)
+    tables = db.relationship("Tables", backref="owner", lazy=True)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id}, {self.first_name}, {self.last_name})'
@@ -30,7 +30,7 @@ class Menuitems(db.Model):
     discount = db.Column(db.Float, nullable=True)
     serving_time_period = db.Column(db.Integer, nullable=False)
     estimated_cooking_time = db.Column(db.Integer, nullable=False)
-    orders = db.relationship('Orders', backref="author", lazy=True)
+    orders = db.relationship('Orders', backref="member", lazy=True)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id} - {self.name} - {self.category})"
@@ -43,7 +43,7 @@ class Orders(db.Model):
     status = db.Column(db.Boolean, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    receipts = db.relationship("Receipts", backref="author", lazy=True)
+    receipts = db.relationship("Receipts", backref="result", lazy=True)
     menu_items = db.Column(db.Integer, db.ForeignKey("menuitems.id"), nullable=False)
 
     def __repr__(self):
