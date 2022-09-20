@@ -2,7 +2,7 @@ from cafe import app, bcrypt, db
 from flask import render_template, flash, redirect, url_for, request
 from cafe.forms import SignupForm, LoginForm
 from cafe.models import Users
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user , login_required , logout_user
 
 
 @app.route('/')
@@ -43,6 +43,13 @@ def login():
         else:
             flash("Login Unsuccessful. Please check email and password", "danger")
     return render_template('login.html', form=form)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("you logged out account" , 'danger')
+    return redirect(url_for('home'))
 
 
 @app.route('/order')
