@@ -25,6 +25,7 @@ SignUp page
 
         <div class="card bg-glass">
           <div class="card-body px-4 px-md-5">
+            {% include 'inc/form_errors.html' %}
             <form action="" method="post">
 							{{ form.csrf_token }}
               <!-- 2 column grid layout with text inputs for the first and last names -->
