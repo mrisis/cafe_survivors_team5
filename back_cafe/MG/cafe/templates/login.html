@@ -11,6 +11,7 @@ Login Page
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-light text-dark" style="border-radius: 1rem;">
                     <div class="card-body text-center">
+                    {% include 'inc/form_errors.html' %}
                     <form>
                         {{ form.csrf_token }}
                         <div class="mb-md-4">
