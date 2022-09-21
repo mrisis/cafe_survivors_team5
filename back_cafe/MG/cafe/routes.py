@@ -1,8 +1,8 @@
 from cafe import app, bcrypt, db
 from flask import render_template, flash, redirect, url_for, request
-from cafe.forms import SignupForm, LoginForm , UpdateProfileForm
-from cafe.models import Users
-from flask_login import login_user, current_user , login_required , logout_user
+from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
+from cafe.models import Users, Menuitems
+from flask_login import login_user, current_user, login_required, logout_user
 
 
 @app.route('/')
@@ -44,11 +44,12 @@ def login():
             flash("Login Unsuccessful. Please check email and password", "danger")
     return render_template('login.html', form=form)
 
+
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    flash("you logged out account" , 'danger')
+    flash("you logged out account", 'danger')
     return redirect(url_for('home'))
 
 
@@ -59,9 +60,12 @@ def order():
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')
+    menu_items = Menuitems.query.all()
+    list_of_category = list(set([item.category for item in menu_items]))
+    return render_template('menu.html', menu_items=menu_items, list_of_category=list_of_category)
 
-@app.route('/profile' ,methods = ['GET' ,'POST'])
+
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     form = UpdateProfileForm()
@@ -71,11 +75,11 @@ def profile():
         current_user.phone_number = form.phone_number.data
         current_user.last_name = form.last_name.data
         db.session.commit()
-        flash('updated your profile ' , 'success')
+        flash('updated your profile ', 'success')
         return redirect(url_for('profile'))
     elif request.method == 'GET':
         form.first_name.data = current_user.first_name
         form.email.data = current_user.email
         form.phone_number.data = current_user.phone_number
         form.last_name.data = current_user.last_name
-    return render_template("profile.html" ,form = form)
+    return render_template("profile.html", form=form)

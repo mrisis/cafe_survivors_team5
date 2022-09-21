@@ -6,10 +6,10 @@
             <div class="col-4 mt-5">
                 <div class="row">
                     <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action active" id="list-home-list"
-                           data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Drinks</a>
-                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list"
-                           href="#list-profile" role="tab" aria-controls="list-profile">Cakes</a>
+                        <a class="list-group-item list-group-item-action active" id="list-drink-list"
+                           data-bs-toggle="list" href="#list-Drink" role="tab" aria-controls="list-home">Drinks</a>
+                        <a class="list-group-item list-group-item-action" id="list-cafe-list" data-bs-toggle="list"
+                           href="#list-Cake" role="tab" aria-controls="list-profile">Cakes</a>
                         <!--                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>-->
                         <!--                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>-->
                     </div>
@@ -35,217 +35,225 @@
 
             <div class="col-8 mt-5">
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="list-home" role="tabpanel"
-                         aria-labelledby="list-home-list">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="{{url_for('static', filename='621b5e0ec6a3b.jpeg')}}"
-                                         class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
+
+                            {%  for category in list_of_category %}
+                                <div class="tab-pane fade show active" id="list-{{ category }}" role="tabpanel"
+                                 aria-labelledby="list-home-list">
+                                <div class="row">
+                                    {%  for menu_item in menu_items %}
+                                    {% if menu_item.category== category %}
+                                            <div class="col-lg-4 col-md-6 gy-3">
+                                            <div class="card">
+                                                <img src="{{url_for('static', filename='621b5e0ec6a3b.jpeg')}}"
+                                                     class="card-img-top img-fluid"
+                                                     alt="Fissure in Sandstone"/>
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title">{{ menu_item.name }}</h5>
+                                                    <h5 class="card-price">{{ menu_item.price|int }}</h5>
+                                                    <div class="d-grid gap-2 d-flex justify-content-center">
+                                                        <button class="btn btn-outline-dark me-2" type="button">-1</button>
+                                                        <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
+                                                        <button class="btn btn-outline-dark" type="button">+1</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b5ea70442c.jpeg" class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b5f73adb06.jpeg" class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                        {% endif %}
+                                        {% endfor %}
                             </div>
                         </div>
-                        <div class="row mt-3 mb-3">
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b61a4378f5.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b60026ea83.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/622306e22ac2c.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            {% endfor %}
+                </div>
                     </div>
 
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b5ea70442c.jpeg" class="card-img-top img-fluid"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b5f73adb06.jpeg" class="card-img-top img-fluid"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="row mt-3 mb-3">#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b61a4378f5.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b60026ea83.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/622306e22ac2c.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
 
-                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/62b2e22e28245.jpeg" class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/62a9a6bee8dd3.jpeg" class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b83bd3136f.jpeg" class="card-img-top img-fluid"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-3 mb-3">
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b830ab9703.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/621b83547ebff.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <img src="../static/62b2e159d2e98.jpeg" class="card-img-top"
-                                         alt="Fissure in Sandstone"/>
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make
-                                            up the bulk of the card's content.</p>
-                                        <div class="d-grid gap-2 d-flex justify-content-center">
-                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>
-                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>
-                                            <button class="btn btn-outline-dark" type="button">+1</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+{#                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">#}
+{#                        <div class="row">#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/62b2e22e28245.jpeg" class="card-img-top img-fluid"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/62a9a6bee8dd3.jpeg" class="card-img-top img-fluid"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b83bd3136f.jpeg" class="card-img-top img-fluid"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="row mt-3 mb-3">#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b830ab9703.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/621b83547ebff.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="card">#}
+{#                                    <img src="../static/62b2e159d2e98.jpeg" class="card-img-top"#}
+{#                                         alt="Fissure in Sandstone"/>#}
+{#                                    <div class="card-body">#}
+{#                                        <h5 class="card-title">Card title</h5>#}
+{#                                        <p class="card-text">Some quick example text to build on the card title and make#}
+{#                                            up the bulk of the card's content.</p>#}
+{#                                        <div class="d-grid gap-2 d-flex justify-content-center">#}
+{#                                            <button class="btn btn-outline-dark me-2" type="button">-1</button>#}
+{#                                            <button class="btn btn-outline-dark me-2 disabled" type="button">0</button>#}
+{#                                            <button class="btn btn-outline-dark" type="button">+1</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                     <!--                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>-->
                     <!--                    <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>-->
-                </div>
             </div>
         </div>
         <div class="col-9">
@@ -311,4 +319,27 @@
         </div>
     </footer>
 </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+    const drink = document.querySelector('#list-Drink')
+    const cafe = document.querySelector('#list-Cake')
+    cafe.style.display = 'none';
+
+    document.querySelector('#list-drink-list').addEventListener('click',e=>{
+        e.preventDefault()
+        cafe.style.display = 'none';
+        drink.style.display = 'block';
+    })
+
+    document.querySelector('#list-cafe-list').addEventListener('click',e=>{
+        e.preventDefault()
+        cafe.style.display = 'block';
+        drink.style.display = 'none';
+    })
+
+    })
+    </script>
+
 {% endblock %}
