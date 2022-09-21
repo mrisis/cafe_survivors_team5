@@ -96,60 +96,37 @@
             </div>
         </div>
     </section>
-    <div class="container mt-5 border-top border-light border-2 ">
-        <footer class="mt-4 ">
-            <div class="row ">
-                <div class="col-6 text-dark text-center align-items-center">
 
-
-                    <div class="card " style = "height: 400px">
-                        <h3 class = 'mt-5'>founders:</h3>
-                        <h4 class = 'mt-2'>Mahdi Mirzaie</h4>
-                        <h4 class = 'mt-2'>MohammadMahdi Farokhi</h4>
-                        <h4 class = 'mt-2'>Masoud Zandi</h4>
-                        <h4 class = 'mt-2'>Parsa Ahmaripour</h4>
-                        <h4 class = 'mt-2'>Reza Amin</h4>
-                    </div>
-
-
-
+    <div class="container mt-5 border-top border-2">
+        <footer class="mt-4">
+            <div class="row mb-4 gy-4">
+                <div class="col-lg-6 col-md-12 text-dark text-center align-items-center text-light">
+                    <h2 class="text-center mb-4 text-light">Contact Info</h2>
+                    <ul class="list-group lead">
+                      <li class="list-group-item bg-dark text-light border-light">
+                        <span class="fw-bold">Location:</span> Tehran, Kermanshah, Isfahan
+                      </li>
+                      <li class="list-group-item bg-dark text-light border-light">
+                        <span class="fw-bold">Phone:</span> (021) 123-4567
+                      </li>
+                      <li class="list-group-item bg-dark text-light border-light">
+                        <span class="fw-bold">Email:</span> cafesurvivors@email.com
+                      </li>
+                    </ul>
                 </div>
-                <div class="col-6">
-                    <div id="map" class="mb-5" style = "height: 400px"></div>
+                <div class="col-lg-6 col-md-12">
+                    <div id="map" class="mb-5 w-md-100 h-md-100" style = "width: 100%;height: 100%;border-radius: 10px;"></div>
                 </div>
-
             </div>
 
 
-            <div class="d-flex flex-column flex-sm-row justify-content-center py-4 border-top text-light">
+            <div class="d-flex flex-column text-center flex-sm-row justify-content-center py-4 border-top text-light">
                 <p>© 2022 Company, Inc. All rights reserved.</p>
 
             </div>
         </footer>
     </div>
 
-
-
-
-
-
-    	<script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
-
-
-	<script>
-		mapboxgl.accessToken = 'pk.eyJ1IjoiYnRyYXZlcnN5IiwiYSI6ImNrbmh0dXF1NzBtbnMyb3MzcTBpaG10eXcifQ.h5ZyYCglnMdOLAGGiL1Auw'
-		var map = new mapboxgl.Map({
-			container: 'map',
-			style: 'mapbox://styles/mapbox/streets-v11',
-			center: [51.4215, 35.6966],
-			zoom: 18,
-		})
-	</script>
 {% endblock %}
 
 
