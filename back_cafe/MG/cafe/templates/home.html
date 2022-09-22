@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Home page
+    Home page
 {% endblock %}
 
 {% block body %}
-	<!--    welcome cafe-->
+    <!--    welcome cafe-->
+
     <section id="learn" class=" w-100 my-5">
         <div class="container bg-light mt-5 ">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-md">
-                    <img src="{{url_for('static', filename='cafe_envorment.jpg')}}" class="img-fluid m-1 mt-5" alt="cafe_env" style="width: 500px;height: 300px; object-fit: cover" />
+            <div class="row align-items-center justify-content-center py-3">
+                <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='cafe_envorment.jpg') }}" class="img-fluid" alt="cafe_env"
+                         style="width: 500px;height: 300px; object-fit: cover"/>
                 </div>
-                <div class="col-md p-5">
+                <div class="col-lg-6 col-md-12 p-5">
                     <h2>Welcome To Our Cafe</h2>
                     <p class="lead">
                         A cafe with a lot of options that gives you the pleasure of having good time.<br>
@@ -26,22 +28,23 @@
 
                     </p>
                     <p class="border-top">based on true story</p>
-                    <a href="{{url_for('menu')}}" class="btn btn-outline-dark mt-3">
+                    <a href="{{ url_for('menu') }}" class="btn btn-outline-dark mt-3">
                         <i class="bi bi-chevron-right"></i> Menu
                     </a>
                 </div>
             </div>
         </div>
     </section>
-<!--    coffee-->
+    <!--    coffee-->
     <section class="my-5">
         <div class="container bg-light ">
             <div class="row">
-                <h2 class="text-center mt-4 border-bottom pb-4 border-dark border-5" >Today's Special:<i> Maktab Coffee</i></h2>
+                <h2 class="text-center mt-4 border-bottom pb-4 border-dark border-5">Today's Special:<i> Maktab
+                    Coffee</i></h2>
             </div>
-            <div class="row align-items-center justify-content-between">
+            <div class="row align-items-center justify-content-between py-3">
 
-                <div class="col-md p-5">
+                <div class="col-lg-6 col-md-12 p-5">
 
 
                     <p class="lead">
@@ -54,28 +57,31 @@
                         quae similique laboriosam iste minus placeat odit velit quos,
                         nulla architecto amet voluptates?
                     </p>
-                    <a href="{{url_for('menu')}}" class="btn btn-outline-dark mt-3">
+                    <a href="{{ url_for('menu') }}" class="btn btn-outline-dark mt-3">
                         <i class="bi bi-chevron-right"></i> Menu
                     </a>
                 </div>
-                <div class="col-md d-flex justify-content-center">
-                    <img src="{{url_for('static', filename='cafe_love.jfif')}}" class="img-fluid m-1 mb-5" alt="cafe_env" style="object-fit: cover;width: 500px;height: 300px" />
+                <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='cafe_love.jfif') }}" class="img-fluid" alt="cafe_env"
+                         style="object-fit: cover;width: 500px;height: 300px"/>
                 </div>
             </div>
         </div>
     </section>
-<!--    iranian tea-->
-    <section class=" mt-5 w-100 my-5">
-        <div class="container bg-light ">
+    <!--    iranian tea-->
+    <section class="my-5">
+        <div class="container bg-light">
             <div class="row">
-                <h2 class="text-center mt-4 border-bottom pb-4 border-dark border-5" >Today's Special:<i> Maktab Coffee</i></h2>
+                <h2 class="text-center mt-4 border-bottom pb-4 border-dark border-5">Today's Special:<i> Maktab
+                    Coffee</i></h2>
             </div>
-            <div class="row align-items-center justify-content-between w-100">
-                <div class="col-md d-flex justify-content-center">
-                    <img src="{{url_for('static', filename='iranian_tea.jpg')}}" class="img-fluid m-1" alt="cafe_env" style="width: 500px ; height: 300px ; object-fit: cover" />
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center mt-2">
+                    <img src="{{ url_for('static', filename='iranian_tea.jpg') }}" class="img-fluid" alt="cafe_env"
+                         style="width: 500px ; height: 300px ; object-fit: cover"/>
                 </div>
 
-                <div class="col-md p-5">
+                <div class="col-lg-6 col-md-12 p-5">
 
 
                     <p class="lead">
@@ -88,7 +94,7 @@
                         quae similique laboriosam iste minus placeat odit velit quos,
                         nulla architecto amet voluptates?
                     </p>
-                    <a href="{{url_for('menu')}}" class="btn btn-outline-dark mt-3">
+                    <a href="{{ url_for('menu') }}" class="btn btn-outline-dark mt-3">
                         <i class="bi bi-chevron-right"></i> Menu
                     </a>
                 </div>
@@ -103,19 +109,20 @@
                 <div class="col-lg-6 col-md-12 text-dark text-center align-items-center text-light">
                     <h2 class="text-center mb-4 text-light">Contact Info</h2>
                     <ul class="list-group lead">
-                      <li class="list-group-item bg-dark text-light border-light">
-                        <span class="fw-bold">Location:</span> Tehran, Kermanshah, Isfahan
-                      </li>
-                      <li class="list-group-item bg-dark text-light border-light">
-                        <span class="fw-bold">Phone:</span> (021) 123-4567
-                      </li>
-                      <li class="list-group-item bg-dark text-light border-light">
-                        <span class="fw-bold">Email:</span> cafesurvivors@email.com
-                      </li>
+                        <li class="list-group-item bg-dark text-light border-light">
+                            <span class="fw-bold">Location:</span> Tehran, Kermanshah, Isfahan
+                        </li>
+                        <li class="list-group-item bg-dark text-light border-light">
+                            <span class="fw-bold">Phone:</span> (021) 123-4567
+                        </li>
+                        <li class="list-group-item bg-dark text-light border-light">
+                            <span class="fw-bold">Email:</span> cafesurvivors@email.com
+                        </li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
-                    <div id="map" class="mb-5 w-md-100 h-md-100" style = "width: 100%;height: 100%;border-radius: 10px;"></div>
+                    <div id="map" class="mb-5 w-md-100 h-md-100"
+                         style="width: 100%;height: 100%;border-radius: 10px;"></div>
                 </div>
             </div>
 

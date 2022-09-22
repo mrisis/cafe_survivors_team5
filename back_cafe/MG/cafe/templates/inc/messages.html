@@ -1,9 +1,9 @@
 <div class="container" style="margin-top: 80px">
-	{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-			{% for cat,msg in messages %}
-				<p class="alert alert-{{ cat }}">{{ msg }}</p>
-			{% endfor %}
-		{% endif %}
-	{% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for cat,msg in messages %}
+                <p class="alert alert-{{ cat }}">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 </div>

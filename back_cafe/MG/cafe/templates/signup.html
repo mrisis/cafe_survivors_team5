@@ -1,85 +1,85 @@
 {% extends 'base.html' %}
 
 {% block title %}
-SignUp page
+    SignUp page
 {% endblock %}
 
 
 {% block body %}
-<style></style>
-<section class="bg-dark overflow-hidden mt-5 p-5">
+    <style></style>
+    <section class="bg-dark overflow-hidden mt-5 p-5">
 
 
-  <div class="container px-4 px-md-5 text-center bg-dark">
-    <div class="row gx-lg-5 align-items-center">
-      <div class="col-lg-6 col-md-12" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-          Welcome to sign up page of Cafe Survivors
-        </h1>
-      </div>
-
-      <div class="col-lg-6 col-md-12 mb-lg-0 position-relative mt-5">
-
-        <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-        <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-
-        <div class="card bg-glass">
-          <div class="card-body px-4 px-md-5">
-            {% include 'inc/form_errors.html' %}
-            <form action="" method="post">
-							{{ form.csrf_token }}
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-                <h2 class="fw-bold text-uppercase text-center mb-4">Sign up</h2>
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-
-										{{ form.first_name(class="form-control", placeholder="First name") }}
-                  </div>
+        <div class="container px-4 px-md-5 text-center bg-dark">
+            <div class="row gx-lg-5 align-items-center">
+                <div class="col-lg-6 col-md-12" style="z-index: 10">
+                    <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                        Welcome to sign up page of Cafe Survivors
+                    </h1>
                 </div>
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
 
-										{{ form.last_name(class="form-control", placeholder="Last name") }}
-                  </div>
+                <div class="col-lg-6 col-md-12 mb-lg-0 position-relative mt-5">
+
+                    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                    <div class="card bg-glass">
+                        <div class="card-body px-4 px-md-5">
+                            {% include 'inc/form_errors.html' %}
+                            <form action="" method="post">
+                                {{ form.csrf_token }}
+                                <!-- 2 column grid layout with text inputs for the first and last names -->
+                                <div class="row">
+                                    <h2 class="fw-bold text-uppercase text-center mb-4">Sign up</h2>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+
+                                            {{ form.first_name(class="form-control", placeholder="First name") }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+
+                                            {{ form.last_name(class="form-control", placeholder="Last name") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+
+                                    {{ form.email(class="form-control", placeholder="Email") }}
+                                </div>
+
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+
+                                    {{ form.phone_number(class="form-control", placeholder="Phone number") }}
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+
+                                    {{ form.password(class="form-control", placeholder="Password") }}
+                                </div>
+
+                                <div class="form-outline mb-4">
+
+                                    {{ form.confirm_pass(class="form-control", placeholder="Confirm Password") }}
+                                </div>
+
+                                <!-- Submit button -->
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" value="signup" class="btn btn-outline-dark">
+                                        Sign up
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-
-								{{ form.email(class="form-control", placeholder="Email") }}
-              </div>
-
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-
-								{{ form.phone_number(class="form-control", placeholder="Phone number") }}
-              </div>
-
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-
-								{{ form.password(class="form-control", placeholder="Password") }}
-              </div>
-
-							<div class="form-outline mb-4">
-
-								{{ form.confirm_pass(class="form-control", placeholder="Confirm Password") }}
-              </div>
-
-              <!-- Submit button -->
-              <div class="d-flex justify-content-center">
-              <button type="submit" value="signup" class="btn btn-outline-dark">
-                Sign up
-              </button>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 {% endblock %}
