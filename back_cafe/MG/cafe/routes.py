@@ -55,7 +55,13 @@ def logout():
 
 @app.route('/order')
 def order():
-    return render_template('order.html')
+    orders = Orders.query.filter_by(user=current_user)
+    total_price = 0
+    counter = 0
+    for order in orders:
+        counter += 1
+        total_price += order.menuitem.price - order.menuitem.discount
+    return render_template('order.html', orders=orders, total_price=total_price, counter=counter)
 
 
 @app.route('/menu')
