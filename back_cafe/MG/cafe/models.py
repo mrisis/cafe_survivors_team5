@@ -25,9 +25,9 @@ class Users(db.Model, UserMixin):
 class Menuitems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String(40))
-    discount = db.Column(db.Float, nullable=True)
+    discount = db.Column(db.Integer, nullable=True)
     serving_time_period = db.Column(db.Integer, nullable=False)
     estimated_cooking_time = db.Column(db.Integer, nullable=False)
     orders = db.relationship('Orders', backref="menuitem", lazy=True)
@@ -50,7 +50,7 @@ class Tables(db.Model):
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tables = db.Column(db.Integer, db.ForeignKey('tables.id'), nullable=False)
-    number = db.Column(db.String(20), unique=True, nullable=False)
+    number = db.Column(db.String(20), nullable=False)
     status = db.Column(db.Boolean, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
@@ -64,8 +64,8 @@ class Orders(db.Model):
 class Receipts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     orders = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
-    total_price = db.Column(db.Float, nullable=False)
-    final_price = db.Column(db.Float, nullable=False)
+    total_price = db.Column(db.Integer, nullable=False)
+    final_price = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
