@@ -18,33 +18,8 @@
                     </div>
                     <!--Order-->
                     <div class="row h-100 justify-content-center">
-                        <ul class="list-group mt-5">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Chai
+                        <ul class="list-group mt-5 side_items">
 
-                                <span class="badge bg-primary rounded-pill">
-                                <button class="badge border-0 bg-primary rounded-pill">-</button>
-                                2
-                                <button class="badge border-0 bg-primary rounded-pill">+</button>
-                            </span>
-
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                Mti drink
-                                <span class="badge bg-primary rounded-pill">
-                                <button class="badge border-0 bg-primary rounded-pill">-</button>
-                                2
-                                <button class="badge border-0 bg-primary rounded-pill">+</button>
-                            </span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Cake parsa
-                                <span class="badge bg-primary rounded-pill">
-                                <button class="badge border-0 bg-primary rounded-pill">-</button>
-                                2
-                                <button class="badge border-0 bg-primary rounded-pill">+</button>
-                            </span>
-                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <button
                                         class="btn btn-outline-dark me-2 mt-2"
@@ -78,7 +53,7 @@
                                                         <h5 class="card-title">{{ menu_item.name }}</h5>
                                                         <h5 class="card-price">{{ menu_item.price|int }} T</h5>
                                                         <div class="d-grid gap-2">
-                                                            <button class="btn btn-outline-dark me-2" type="button">+
+                                                            <button id="{{ menu_item.name }}" class="btn btn-outline-dark add_item me-2" type="button">+
                                                             </button>
                                                         </div>
                                                     </div>
@@ -193,6 +168,18 @@
 
     });
 
+		$(".add_item").on('click', function(e){
+		$("ul").prepend(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${e.currentTarget.id}
+
+                                <span class="badge bg-primary rounded-pill">
+                                <button class="badge border-0 bg-primary rounded-pill">-</button>
+
+                                <button class="badge border-0 bg-primary rounded-pill">+</button>
+                            </span>
+
+                            </li>`);
+		});
 
 
 
