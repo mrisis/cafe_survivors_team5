@@ -1,8 +1,9 @@
-from cafe import app, bcrypt, db
 from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, current_user, login_required, logout_user
+
+from cafe import app, bcrypt, db
 from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
 from cafe.models import Users, Menuitems, Orders
-from flask_login import login_user, current_user, login_required, logout_user
 
 
 @app.route('/')
@@ -60,7 +61,7 @@ def order():
     counter = 0
     for order in orders:
         counter += 1
-        total_price += order.menuitem.price - order.menuitem.discount
+        total_price += (order.menuitem.price - order.menuitem.discount) * int(order.number)
     return render_template('order.html', orders=orders, total_price=total_price, counter=counter)
 
 
