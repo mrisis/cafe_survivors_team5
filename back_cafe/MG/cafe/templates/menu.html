@@ -1,80 +1,88 @@
 {% extends "base.html" %}
 {% block body %}
-    <section class="px-5">
-        <div class="container-fluid mt-5">
-            <div class="row">
-                <div class="col-4">
-                    <div class="row mt-3">
-                        <div class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item list-group-item-action active" id="list-drink-list"
-                               data-bs-toggle="list" href="#list-Drink" role="tab" aria-controls="list-home">Drinks</a>
-                            <a class="list-group-item list-group-item-action" id="list-cake-list" data-bs-toggle="list"
-                               href="#list-Cake" role="tab" aria-controls="list-profile">Cakes</a>
-                            <a class="list-group-item list-group-item-action" id="list-smoke-list" data-bs-toggle="list"
-                               href="#list-Smoke" role="tab" aria-controls="list-profile">Smokes</a>
-                            <!--                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>-->
-                            <!--                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>-->
-                        </div>
-                    </div>
-                    <!--Order-->
-                    <div class="row h-100 justify-content-center">
-                        <ul class="list-group mt-5 side_items">
-
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <button
-                                        class="btn btn-outline-dark me-2 mt-2"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#enroll"
-                                >
-                                    Seat Selection
-                                </button>
-                            </li>
-
-                        </ul>
-
+<section class="px-5">
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-4">
+                <div class="row mt-3">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-drink-list"
+                           data-bs-toggle="list" href="#list-Drink" role="tab" aria-controls="list-home">Drinks</a>
+                        <a class="list-group-item list-group-item-action" id="list-cake-list" data-bs-toggle="list"
+                           href="#list-Cake" role="tab" aria-controls="list-profile">Cakes</a>
+                        <a class="list-group-item list-group-item-action" id="list-smoke-list" data-bs-toggle="list"
+                           href="#list-Smoke" role="tab" aria-controls="list-profile">Smokes</a>
+                        <!--                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>-->
+                        <!--                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>-->
                     </div>
                 </div>
+                <!--Order-->
+                <div class="row h-100 justify-content-center">
+                    <ul class="list-group mt-5 side_items">
 
-                <div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <button
+                                    class="btn btn-outline-dark me-2 mt-2"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#enroll"
+                            >
+                                Seat Selection
+                            </button>
+                        </li>
 
-                        {% for category in list_of_category %}
-                            <div class="tab-pane fade show active" id="list-{{ category }}" role="tabpanel"
-                                 aria-labelledby="list-home-list">
-                                <div class="row">
-                                    {% for menu_item in menu_items %}
-                                        {% if menu_item.category== category %}
-                                            <div class="col-lg-4 col-md-6 gy-3">
-                                                <div class="card">
-                                                    <img src="{{ url_for('static', filename='621b5e0ec6a3b.jpeg') }}"
-                                                         class="card-img-top img-fluid"
-                                                         alt="Fissure in Sandstone"/>
-                                                    <div class="card-body text-center">
-                                                        <h5 class="card-title">{{ menu_item.name }}</h5>
-                                                        <h5 class="card-price">{{ menu_item.price|int }} T</h5>
-                                                        <div class="d-grid gap-2">
-                                                            <button id="{{ menu_item.name }}" class="btn btn-outline-dark add_item me-2" type="button">+
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+
+                    {% for category in list_of_category %}
+                    <div class="tab-pane fade show active" id="list-{{ category }}" role="tabpanel"
+                         aria-labelledby="list-home-list">
+                        <div class="row">
+                            {% for menu_item in menu_items %}
+                            {% if menu_item.category== category %}
+                            <div class="col-lg-4 col-md-6 gy-3">
+                                <div class="card">
+                                    <img src="{{ url_for('static', filename='621b5e0ec6a3b.jpeg') }}"
+                                         class="card-img-top img-fluid"
+                                         alt="Fissure in Sandstone"/>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ menu_item.name }}</h5>
+                                        <h5 class="card-price">{{ ((menu_item.price * (100 - menu_item.discount)) /
+                                            100)|int}}
+                                            T <span class="card-discount text-danger">{{ menu_item.discount}}%</span>
+                                        </h5>
+                                        <h6 class="line-through lead">
+                                            <del> {{ menu_item.price}} T</del>
+                                        </h6>
+
+                                        <div class="d-grid gap-2">
+                                            <button id="{{ menu_item.name }}" class="btn btn-outline-dark add_item me-2"
+                                                    type="button">+
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-
             </div>
+
         </div>
-        </div>
-        </div>
-    </section>
+    </div>
+    </div>
+    </div>
+</section>
 
 
-    <div class="modal fade" id="enroll" tabindex="-1" aria-labelledby="enrollLabel" aria-hidden="true">
+<div class="modal fade" id="enroll" tabindex="-1" aria-labelledby="enrollLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,7 +93,8 @@
                 <p class="lead">Entrance Door</p>
                 <form action="">
                     <div class="mb-3">
-                        <button type="button" id="t1" class="btn btn-secondary me-5 table w-25 border-0">Table 1</button>
+                        <button type="button" id="t1" class="btn btn-secondary me-5 table w-25 border-0">Table 1
+                        </button>
                         <button type="button" id="t2" class="btn btn-secondary table w-25">Table 2</button>
                     </div>
                     <div class="mb-3 d-flex justify-content-between mt-5">
@@ -93,7 +102,7 @@
                         <button type="button" id="t4" class="btn btn-secondary table w-25">Table 4</button>
                         <button type="button" id="t5" class="btn btn-secondary table w-25">Table 5</button>
                     </div>
-                     <div class="mb-3 d-flex justify-content-center mt-5">
+                    <div class="mb-3 d-flex justify-content-center mt-5">
                         <button type="button" id="t6" class="btn btn-secondary me-2 table w-25">Table 6</button>
                         <button type="button" id="t7" class="btn btn-secondary table w-25">Table 7</button>
                     </div>
@@ -101,75 +110,77 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close
+                </button>
                 <a href="{{ url_for('order') }}" type="button" class="btn btn-primary">Make Order</a>
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const drink = document.querySelector('#list-Drink')
+        const cake = document.querySelector('#list-Cake')
+        const smoke = document.querySelector('#list-Smoke')
+        smoke.style.display = 'none';
+        cake.style.display = 'none';
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const drink = document.querySelector('#list-Drink')
-            const cake = document.querySelector('#list-Cake')
-            const smoke = document.querySelector('#list-Smoke')
-            smoke.style.display = 'none';
+
+        document.querySelector('#list-drink-list').addEventListener('click', e => {
+            e.preventDefault()
             cake.style.display = 'none';
+            smoke.style.display = 'none';
+            drink.style.display = 'block';
+        })
 
+        document.querySelector('#list-cake-list').addEventListener('click', e => {
+            e.preventDefault()
+            drink.style.display = 'none';
+            smoke.style.display = 'none';
+            cake.style.display = 'block';
+        })
 
-            document.querySelector('#list-drink-list').addEventListener('click', e => {
-                e.preventDefault()
-                cake.style.display = 'none';
-                smoke.style.display = 'none';
-                drink.style.display = 'block';
-            })
+        document.querySelector('#list-smoke-list').addEventListener('click', e => {
+            e.preventDefault()
+            smoke.style.display = 'block';
+            cake.style.display = 'none';
+            drink.style.display = 'none';
 
-            document.querySelector('#list-cake-list').addEventListener('click', e => {
-                e.preventDefault()
-                drink.style.display = 'none';
-                smoke.style.display = 'none';
-                cake.style.display = 'block';
-            })
-
-            document.querySelector('#list-smoke-list').addEventListener('click', e => {
-                e.preventDefault()
-                smoke.style.display = 'block';
-                cake.style.display = 'none';
-                drink.style.display = 'none';
-
-
-            })
 
         })
 
+    })
 
 
-    $('.table').on('click', function(e){
+    $('.table').on('click', function (e) {
 
-            if(e.currentTarget.className.includes("click")){
-                {#alert(e.currentTarget.className)#}
-                $(`#${
-                        e . currentTarget . id
-                    }`).css('background-color', '#6C757D');
-                $(`#${
-                            e . currentTarget . id
-                        }`).removeClass('click');
+        if (e.currentTarget.className.includes("click")) {
+            {
+                alert(e.currentTarget.className)
 
-            }else {
-                $(`#${
-                            e . currentTarget . id
-                        }`).css('background-color', '#0D6EFD');
-                $(`#${
-                            e . currentTarget . id
-                        }`).addClass('click');
             }
+            $(`#${
+                    e.currentTarget.id
+            }`).css('background-color', '#6C757D');
+            $(`#${
+                    e.currentTarget.id
+            }`).removeClass('click');
+
+        } else {
+            $(`#${
+                    e.currentTarget.id
+            }`).css('background-color', '#0D6EFD');
+            $(`#${
+                    e.currentTarget.id
+            }`).addClass('click');
+        }
 
     });
 
-		$(".add_item").on('click', function(e){
-		$("ul").prepend(`<li class="list-group-item d-flex justify-content-between align-items-center">
+    $(".add_item").on('click', function (e) {
+        $("ul").prepend(`<li class="list-group-item d-flex justify-content-between align-items-center">
                                 ${e.currentTarget.id}
 
                                 <span class="badge bg-primary rounded-pill">
@@ -179,10 +190,9 @@
                             </span>
 
                             </li>`);
-		});
+    });
 
 
-
-    </script>
+</script>
 
 {% endblock %}
