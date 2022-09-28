@@ -16,7 +16,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     orders = db.relationship("Orders", backref="user", lazy=True)
-    tables = db.relationship("Tables", backref="user", lazy=True)
+    # tables = db.relationship("Tables", backref="user", lazy=True)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id}, {self.first_name}, {self.last_name})'
@@ -40,8 +40,10 @@ class Tables(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     table_number = db.Column(db.Integer, nullable=False, unique=True)
     cafe_space_position = db.Column(db.Integer, nullable=False, unique=True)
-    users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    use = db.Column(db.Boolean, default=False)
+    # users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     orders = db.relationship("Orders", backref="table", lazy=True)
+
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id} - {self.table_number} - {self.cafe_space_position})"
@@ -50,7 +52,7 @@ class Tables(db.Model):
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tables = db.Column(db.Integer, db.ForeignKey('tables.id'), nullable=False)
-    number = db.Column(db.String(20), nullable=False)
+    number = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
