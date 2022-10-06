@@ -184,15 +184,22 @@
                                 ${e.currentTarget.id}
 
                                 <span class="badge bg-primary rounded-pill">
-                                <button class="badge border-0 bg-primary rounded-pill">-</button>
-
-                                <button class="badge border-0 bg-primary rounded-pill">+</button>
+                                <button class="badge border-0 bg-primary rounded-pill minus" id="${e.currentTarget.id}-">-</button>
+                                <div id="${e.currentTarget.id}">1</div>
+                                <button class="plus badge border-0 bg-primary rounded-pill" id="${e.currentTarget.id}+">+</button>
                             </span>
 
                             </li>`);
     });
 
+$("#beer+").on('click', function (e) {
+    console.log(e)
+    let count = document.getElementById('#${e.currentTarget.id}').text;
+    count++;
+    $(`#${e.currentTarget.id}`).text(count);
+});
 
 </script>
+
 
 {% endblock %}
