@@ -192,14 +192,16 @@
                             </li>`);
     });
 
-$("#beer+").on('click', function (e) {
-    console.log(e)
-    let count = document.getElementById('#${e.currentTarget.id}').text;
-    count++;
-    $(`#${e.currentTarget.id}`).text(count);
-});
+
 
 </script>
-
+    <script>
+          $("#beer+").on('click', function (e) {
+        console.log(e)
+        let count = document.getElementById('#${e.currentTarget.id}').text;
+        count++;
+        $(`#${e.currentTarget.id}`).text(count);
+    });
+    </script>
 
 {% endblock %}
