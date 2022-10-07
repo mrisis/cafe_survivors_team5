@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 
 from cafe import app, bcrypt, db
 from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
-from cafe.models import Users, Menuitems, Orders
+from cafe.models import Users, Menuitems, Orders, Tables
 
 
 @app.route('/')
@@ -68,8 +68,9 @@ def order():
 @app.route('/menu')
 def menu():
     menu_items = Menuitems.query.all()
+    tables = Tables.query.all()
     list_of_category = list(set([item.category for item in menu_items]))
-    return render_template('menu.html', menu_items=menu_items, list_of_category=list_of_category)
+    return render_template('menu.html', tables=tables, menu_items=menu_items, list_of_category=list_of_category)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
