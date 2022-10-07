@@ -15,9 +15,9 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOuVGEtYjTC251RGm3sll-NsTCeb3rhnSAuMBAs7OTUZ2CZBXt8wjUw9ExVN7dZV9L1nw&usqp=CAU"
-                                 alt="avatar"
-                                 class="rounded-circle img-fluid" style="width: 150px;">
+                            <img src="{{ url_for('static', filename='pngfind.com-user-icon-png-2924933.png') }}"
+                            alt="avatar"
+                            class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
 
 
@@ -32,38 +32,38 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">{{ form.first_name.label }}</p>
+                                        <p class="mb-0">{{ form.first_name.label(class='form-control-label') }}</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ form.first_name }}</p>
+                                        <p class="text-muted mb-0">{{ form.first_name(class='form-control w-50') }}</p>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">{{ form.last_name.label }}</p>
+                                        <p class="mb-0">{{ form.last_name.label(class='form-control-label') }}</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ form.last_name }}</p>
+                                        <p class="text-muted mb-0">{{ form.last_name(class='form-control w-50') }}</p>
                                     </div>
                                 </div>
                                 <hr>
 
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">{{ form.email.label }}</p>
+                                        <p class="mb-0">{{ form.email.label(class='form-control-label') }}</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="mb-0">{{ form.email }}</p>
+                                        <p class="mb-0">{{ form.email(class='form-control w-50') }}</p>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p class="mb-0">{{ form.phone_number.label }}</p>
+                                        <p class="mb-0">{{ form.phone_number.label(class='form-control-label') }}</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ form.phone_number }}</p>
+                                        <p class="text-muted mb-0">{{ form.phone_number(class='form-control w-50') }}</p>
                                     </div>
                                 </div>
                                 <input type="submit" class="btn btn-outline-dark mt-4" value="Update">
@@ -72,23 +72,33 @@
 
                     </div>
                     <div class="row">
-                        <h3 class="text-light text-center mb-5 border-bottom border-light border-5 pb-2">Your shopping cart</h3>
+                        <div class="text-center">
+
+                        <h3 class="text-light mb-5 border-bottom border-light border-1 w-50 mx-auto mt-5 pb-3">Your shopping
+                            cart</h3>
+                        </div>
                         <br>
                         {% for order in orders %}
                             <div class="col-md-6">
                                 <div class="card mb-4 mb-md-0">
                                     <div class="card-body text-dark">
-                                        <p class="mb-4"><span class="font-italic me-1">Name: {{ order.menuitem['name'] }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Name: {{ order.menuitem['name'] }}</span>
                                         </p>
-                                        <p class="mb-4"><span class="font-italic me-1">Price: {{ order.menuitem['price']|int }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Price: {{ order.menuitem['price']|int }}</span>
                                         </p>
-                                        <p class="mb-4"><span class="font-italic me-1">Category: {{ order.menuitem['category'] }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Category: {{ order.menuitem['category'] }}</span>
                                         </p>
-                                        <p class="mb-4"><span class="font-italic me-1">Discount: {{ order.menuitem['discount']|int }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Discount: {{ order.menuitem['discount']|int }}</span>
                                         </p>
-                                        <p class="mb-4"><span class="font-italic me-1">Serving time period: {{ order.menuitem['serving_time_period'] }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Serving time period: {{ order.menuitem['serving_time_period'] }}</span>
                                         </p>
-                                        <p class="mb-4"><span class="font-italic me-1">Estimated cooking time: {{ order.menuitem['estimated_cooking_time'] }}</span>
+                                        <p class="mb-4"><span
+                                                class="font-italic me-1">Estimated cooking time: {{ order.menuitem['estimated_cooking_time'] }}</span>
                                         </p>
                                     </div>
                                 </div>
