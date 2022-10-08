@@ -117,7 +117,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close
                 </button>
-                <a href="{{ url_for('order') }}" type="button" class="btn btn-primary">Make Order</a>
+                <a type="button" id="make_order" onclick="table()" class="btn btn-primary">Make Order</a>
             </div>
         </div>
     </div>
@@ -226,14 +226,18 @@
     }
 
     function table() {
-        let xhr = new XMLHttpRequest()
-        xhr.open('GET', 'process.php!name=Brad', true)
-        xhr.onload = function () {
-            console.log(this.responseText)
-        }
-        xhr.send()
+        let data1 = 'hello'
+				$.ajax({
+					url: "{{ url_for('order') }}",
+					type: 'POST',
+					data: data1,
+					success: function(){
+    			window.location.href = "{{ url_for('order') }}";
+}
+
+	});
     }
 
-</script>
+   </script>
 
 {% endblock %}
