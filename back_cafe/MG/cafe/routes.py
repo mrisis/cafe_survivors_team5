@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, current_user, login_required, logout_user
 
 from cafe import app, bcrypt, db
@@ -54,18 +54,27 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/order')
+@app.route('/order', methods=['POST', 'GET'])
+# @login_required
 def order():
+    response = request.get_data().decode('utf-8')
     orders = Orders.query.filter_by(user=current_user)
-    total_price = 0
-    counter = 0
-    for order in orders:
-        counter += 1
-        total_price += (order.menuitem.price - order.menuitem.discount) * int(order.number)
-    return render_template('order.html', orders=orders, total_price=total_price, counter=counter)
+    if orders:
+        total_price = 0
+        counter = 0
+        for order in orders:
+            counter += 1
+            total_price += (order.menuitem.price - order.menuitem.discount) * int(order.number)
+    print(response)
+    print(type(response))
+    return render_template('order.html', orders=orders,
+                               total_price=total_price,
+                               counter=counter,
+                               response=response)
 
 
-@app.route('/menu')
+@app.route('/menu', methods=['GET', 'POST'])
+@login_required
 def menu():
     menu_items = Menuitems.query.all()
     tables = Tables.query.all()
