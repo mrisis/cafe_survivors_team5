@@ -117,7 +117,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close
                 </button>
-                <a type="button" id="make_order" onclick="table()" class="btn btn-primary">Make Order</a>
+                <a type="button" id="make_order" href="{{ url_for('order') }}" onclick="table()" class="btn btn-primary">Make Order</a>
+
             </div>
         </div>
     </div>
@@ -125,6 +126,7 @@
 
 
 <script>
+var myDict = {};
     document.addEventListener('DOMContentLoaded', () => {
         const drink = document.querySelector('#list-Drink')
         const cake = document.querySelector('#list-Cake')
@@ -184,7 +186,7 @@
 
 
     $(".add_item").on('click', function (e) {
-
+    myDict[e.currentTarget.id] = 1;
         $(`#${e.currentTarget.id}`).addClass('disabled')
         $("ul").prepend(`<li id="${e.currentTarget.id}_li" class="list-group-item">
                                 <div class="row d-flex justify-content-between align-items-center">
@@ -226,14 +228,14 @@
     }
 
     function table() {
-        let data1 = 'hello'
+        let data1 = {'hello': 'world'}
 				$.ajax({
 					url: "{{ url_for('order') }}",
 					type: 'POST',
-					data: data1,
-					success: function(){
-    			window.location.href = "{{ url_for('order') }}";
-}
+					data: JSON.stringify(myDict),
+					contentType: 'application/json',
+
+
 
 	});
     }
