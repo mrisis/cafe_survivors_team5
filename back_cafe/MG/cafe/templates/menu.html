@@ -173,6 +173,7 @@ var myDict = {};
             }`).removeClass('click');
 
         } else {
+            myDict["table"] = e.currentTarget.id.replace("table" , '')
             $(`#${
                     e.currentTarget.id
             }`).css('background-color', '#07c941');
@@ -209,6 +210,7 @@ var myDict = {};
     });
 
     function up(max, item) {
+        myDict[item.replace('_item' , '')] = (myDict[item.replace('_item' , '')] || 1) + 1
         document.getElementById(item).value = parseInt(document.getElementById(item).value) + 1;
         if (document.getElementById(item).value >= parseInt(max)) {
             document.getElementById(item).value = max;
@@ -216,9 +218,11 @@ var myDict = {};
     }
 
     function down(min, item) {
+        myDict[item.replace('_item' , '')] = (myDict[item.replace('_item' , '')] || 1) - 1
         document.getElementById(item).value = parseInt(document.getElementById(item).value) - 1;
         if (document.getElementById(item).value <= parseInt(min)) {
             document.getElementById(item).value = min;
+
         }
     }
 
