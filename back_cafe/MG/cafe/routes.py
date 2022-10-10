@@ -72,7 +72,7 @@ def order():
         counter = 0
         orders = []
         table = session['table']
-        table = Tables.query.filter_by(table_number=table).first()
+        table = Tables.query.filter_by(id=table).first()
         print(table)
         for k, v in session.items():
             item = Menuitems.query.filter_by(name=k).first()
