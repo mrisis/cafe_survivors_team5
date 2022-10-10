@@ -71,11 +71,6 @@
                                                 <h6 class="mb-0">T {{ order.menuitem['price']|int }}</h6>
                                             </div>
 
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end me-5">
-                                                <a href="#!" class="">
-                                                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                                                </a>
-                                            </div>
                                         </div>
                                         <hr class="my-4">
                                         {% endfor %}
@@ -98,9 +93,8 @@
 
                                         <form class="mb-3">
                                             <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">Address</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp" placeholder="Add address">
+                                                <label for="exampleInputEmail1" class="form-label">Your Table</label>
+                                                <h4>Table Number : {{table.table_number}}</h4>
                                             </div>
                                             <a type="button" id="pay-button" href="{{ url_for('profile') }}" class="btn btn-dark btn-block btn-lg"
                                                     data-mdb-ripple-color="dark">Pay
