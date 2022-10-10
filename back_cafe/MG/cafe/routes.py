@@ -57,11 +57,13 @@ def logout():
 @app.route('/order', methods=['POST', 'GET'])
 @login_required
 def order():
+
     if request.method == 'POST':
         session['hello'] = 'world'
         response = request.get_json()
         res = make_response()
         for k, v in response.items():
+            print(k,v)
             session[k.replace('_', ' ')] = str(v)
         return res
 
@@ -69,17 +71,21 @@ def order():
         total_price = 0
         counter = 0
         orders = []
+        table = session['table']
+        table = Tables.query.filter_by(table_number=table).first()
+        print(table)
         for k, v in session.items():
             item = Menuitems.query.filter_by(name=k).first()
             if item:
                 counter += 1
                 total_price += (item.price - item.discount) * int(v)
+
                 orders.append(
-                    Orders(tables=1, number=int(v), status=False, user=current_user, menuitem=item, receipts=1))
+                    Orders(table=table, number=int(v), status=False, user=current_user, menuitem=item, receipts=1))
 
         return render_template('order.html', orders=orders,
                                total_price=total_price,
-                               counter=counter)
+                               counter=counter,table = table)
 
 
 @app.route('/menu', methods=['GET', 'POST'])
@@ -131,3 +137,6 @@ def profile():
                     d[i.id].append(j)
 
     return render_template("profile.html", form=form, orders=d)
+
+
+
