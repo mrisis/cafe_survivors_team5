@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, login_required, logout_user
 
 from cafe import app, bcrypt, db
 from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
-from cafe.models import Users, Menuitems, Orders, Tables
+from cafe.models import Users, Menuitems, Orders, Tables , Receipts
 
 
 @app.route('/')
@@ -62,7 +62,7 @@ def order():
         res = make_response()
         for k, v in response.items():
             print(k, v)
-            res.set_cookie(k, str(v))
+            res.set_cookie(k.replace('_',' '), str(v))
         return res
 
     if request.method == 'GET':
@@ -77,7 +77,7 @@ def order():
             if item:
                 counter += 1
                 total_price += (item.price - item.discount) * int(v)
-                orders.append(Orders(tables=1, number=int(v), status=False, user=current_user, menuitem=item))
+                orders.append(Orders(tables=1, number=int(v), status=False, user=current_user, menuitem=item,receipts=1))
 
         return render_template('order.html', orders=orders,
                                total_price=total_price,
@@ -113,3 +113,21 @@ def profile():
         form.phone_number.data = current_user.phone_number
         form.last_name.data = current_user.last_name
     return render_template("profile.html", form=form, orders=orders)
+
+@app.route('/pay',methods=['POST','GET'])
+@login_required
+def pay():
+    req = dict(request.cookies.items())
+    receipt=Receipts(total_price=100,final_price=200)
+    for k, v in req.items():
+        print(k, v)
+        item = Menuitems.query.filter_by(name=k).first()
+        if item:
+            order=Orders(tables=1, number=int(v), status=True, user=current_user, menuitem=item,receipts=receipt)
+            db.session.add(order)
+            db.session.commit()
+
+
+    return redirect(url_for('profile'))
+
+
