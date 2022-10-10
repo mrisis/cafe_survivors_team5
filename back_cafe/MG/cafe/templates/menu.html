@@ -46,7 +46,7 @@
                             {% if menu_item.category== category %}
                             <div class="col-lg-4 col-md-6 gy-3">
                                 <div class="card">
-                                    <img src="{{ url_for('static', filename='621b5e0ec6a3b.jpeg') }}"
+                                    <img src="{{ url_for('static', filename=menu_item.name+'.jpeg') }}"
                                          class="card-img-top img-fluid"
                                          alt="Fissure in Sandstone"/>
                                     <div class="card-body text-center">
