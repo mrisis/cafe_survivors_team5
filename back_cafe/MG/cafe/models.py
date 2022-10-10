@@ -49,6 +49,11 @@ class Tables(db.Model):
         return f"{self.__class__.__name__}({self.id} - {self.table_number} - {self.cafe_space_position})"
 
 
+
+
+
+
+
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tables = db.Column(db.Integer, db.ForeignKey('tables.id'), nullable=False)
@@ -56,19 +61,23 @@ class Orders(db.Model):
     status = db.Column(db.Boolean, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now)
     users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    receipts = db.relationship("Receipts", backref="order", lazy=True)
+    receipts = db.Column(db.Integer, db.ForeignKey("receipts.id"), nullable=False)
     menu_items = db.Column(db.Integer, db.ForeignKey("menuitems.id"), nullable=False)
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.id}, {self.menu_items}, {self.status})'
 
 
+
 class Receipts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    orders = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    orders = db.relationship("Orders", backref="receipt", lazy=True)
     total_price = db.Column(db.Integer, nullable=False)
     final_price = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id} - {self.total_price} - {self.final_price} - {self.timestamp})"
+
+
+
