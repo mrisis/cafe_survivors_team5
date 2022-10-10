@@ -103,9 +103,9 @@
                                                 <input type="text" class="form-control" id="exampleInputEmail1"
                                                        aria-describedby="emailHelp" placeholder="Add address">
                                             </div>
-                                            <button type="button" class="btn btn-dark btn-block btn-lg"
+                                            <a type="button" id="pay-button" href="{{ url_for('pay') }}" class="btn btn-dark btn-block btn-lg"
                                                     data-mdb-ripple-color="dark">Pay
-                                            </button>
+                                            </a>
                                         </form>
                                     </div>
                                 </div>
@@ -117,6 +117,11 @@
         </div>
     </section>
     <script>
+        // $('#pay-button').on('click',function (e){
+        //     alert('pay is success')
+        //
+        // })
+
 
 
 
