@@ -1,9 +1,9 @@
-from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
+from flask import render_template, flash, redirect, url_for, request, jsonify, make_response, Response, session
 from flask_login import login_user, current_user, login_required, logout_user
 
 from cafe import app, bcrypt, db
 from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
-from cafe.models import Users, Menuitems, Orders, Tables , Receipts
+from cafe.models import Users, Menuitems, Orders, Tables, Receipts
 
 
 @app.route('/')
@@ -55,34 +55,31 @@ def logout():
 
 
 @app.route('/order', methods=['POST', 'GET'])
-# @login_required
+@login_required
 def order():
     if request.method == 'POST':
+        session['hello'] = 'world'
         response = request.get_json()
         res = make_response()
         for k, v in response.items():
-            print(k, v)
-            res.set_cookie(k.replace('_',' '), str(v))
+            session[k.replace('_', ' ')] = str(v)
         return res
 
     if request.method == 'GET':
-        req = dict(request.cookies.items())
         total_price = 0
         counter = 0
         orders = []
-        print(req.items())
-        for k, v in req.items():
-            print(k, v)
+        for k, v in session.items():
             item = Menuitems.query.filter_by(name=k).first()
             if item:
                 counter += 1
                 total_price += (item.price - item.discount) * int(v)
-                orders.append(Orders(tables=1, number=int(v), status=False, user=current_user, menuitem=item,receipts=1))
+                orders.append(
+                    Orders(tables=1, number=int(v), status=False, user=current_user, menuitem=item, receipts=1))
 
         return render_template('order.html', orders=orders,
                                total_price=total_price,
-                               counter=counter,
-                               req=req)
+                               counter=counter)
 
 
 @app.route('/menu', methods=['GET', 'POST'])
@@ -112,22 +109,25 @@ def profile():
         form.email.data = current_user.email
         form.phone_number.data = current_user.phone_number
         form.last_name.data = current_user.last_name
-    return render_template("profile.html", form=form, orders=orders)
 
-@app.route('/pay',methods=['POST','GET'])
-@login_required
-def pay():
-    req = dict(request.cookies.items())
-    receipt=Receipts(total_price=100,final_price=200)
-    for k, v in req.items():
-        print(k, v)
-        item = Menuitems.query.filter_by(name=k).first()
-        if item:
-            order=Orders(tables=1, number=int(v), status=True, user=current_user, menuitem=item,receipts=receipt)
-            db.session.add(order)
-            db.session.commit()
+        receipt = Receipts(total_price=100, final_price=200, users=current_user.id)
+        req = session.items()
+        lst = []
+        for k, v in req:
+            item = Menuitems.query.filter_by(name=k).first()
+            if item:
+                order = Orders(tables=1, number=int(v), status=True, user=current_user, menuitem=item, receipt=receipt)
+                db.session.add(order)
+                db.session.commit()
+                lst.append(k)
 
+        d = {}
+        for i in lst:
+            session.pop(i)
+        for i in Receipts.query.filter_by(user=current_user):
+            d[i.id] = []
+            for j in Orders.query.filter_by(user=current_user):
+                if i.id == j.receipts:
+                    d[i.id].append(j)
 
-    return redirect(url_for('profile'))
-
-
+    return render_template("profile.html", form=form, orders=d)

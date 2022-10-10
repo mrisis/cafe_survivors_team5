@@ -78,28 +78,28 @@
                             cart</h3>
                         </div>
                         <br>
-                        {% for order in orders %}
+                        {% for order in orders.values() %}
                             <div class="col-md-6">
-                                <div class="card mb-4 mb-md-0">
+                                <div class="card mb-5">
                                     <div class="card-body text-dark">
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Name: {{ order.menuitem['name'] }}</span>
-                                        </p>
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Price: {{ order.menuitem['price']|int }}</span>
-                                        </p>
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Category: {{ order.menuitem['category'] }}</span>
-                                        </p>
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Discount: {{ order.menuitem['discount']|int }}</span>
-                                        </p>
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Serving time period: {{ order.menuitem['serving_time_period'] }}</span>
-                                        </p>
-                                        <p class="mb-4"><span
-                                                class="font-italic me-1">Estimated cooking time: {{ order.menuitem['estimated_cooking_time'] }}</span>
-                                        </p>
+                                        {% for item in order %}
+                                            <div class="card text-light bg-dark my-2">
+                                                <div class="row d-flex text-center">
+                                                    <div class="col-6">
+                                                        <p class="mb-4 mt-4"><span
+                                                            class="font-italic me-1">Name: {{ item.menuitem['name'] }}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="mb-4 mt-4"><span
+                                                            class="font-italic me-1">Price: {{ item.menuitem['price']|int }} T</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        {% endfor %}
+
                                     </div>
                                 </div>
                             </div>

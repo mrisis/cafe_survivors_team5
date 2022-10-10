@@ -16,6 +16,8 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     orders = db.relationship("Orders", backref="user", lazy=True)
+    receipts = db.relationship("Receipts", backref="user", lazy=True)
+
     # tables = db.relationship("Tables", backref="user", lazy=True)
 
     def __repr__(self):
@@ -44,14 +46,8 @@ class Tables(db.Model):
     # users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     orders = db.relationship("Orders", backref="table", lazy=True)
 
-
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id} - {self.table_number} - {self.cafe_space_position})"
-
-
-
-
-
 
 
 class Orders(db.Model):
@@ -68,16 +64,13 @@ class Orders(db.Model):
         return f'{self.__class__.__name__}({self.id}, {self.menu_items}, {self.status})'
 
 
-
 class Receipts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     orders = db.relationship("Orders", backref="receipt", lazy=True)
     total_price = db.Column(db.Integer, nullable=False)
     final_price = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
+    users = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id} - {self.total_price} - {self.final_price} - {self.timestamp})"
-
-
-
