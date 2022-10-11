@@ -57,7 +57,6 @@ def logout():
 @app.route('/order', methods=['POST', 'GET'])
 @login_required
 def order():
-
     if request.method == 'GET':
         total_price = 0
         counter = 0
@@ -66,6 +65,7 @@ def order():
         table = Tables.query.filter_by(id=table).first()
         print(table)
         for k, v in session.items():
+            print(k, v)
             item = Menuitems.query.filter_by(name=k).first()
             if item:
                 counter += 1
@@ -88,12 +88,15 @@ def menu():
 
     req = session.items()
     items = []
+    count = []
     for k, v in req:
         item = Menuitems.query.filter_by(name=k).first()
         if item:
             items.append(item)
+            count.append(v)
+    pack = zip(items, count)
     return render_template('menu.html', tables=tables, menu_items=menu_items, list_of_category=list_of_category,
-                           items=items)
+                           pack=pack)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -153,4 +156,22 @@ def set_session():
 def del_session():
     response = request.get_data().decode('utf-8')
     session.pop(response.replace('_', ' '))
+    return response
+
+
+@app.route('/session/down', methods=['GET', 'POST'])
+@login_required
+def down_session():
+    response = request.get_data().decode('utf-8')
+    print(response)
+    session[response.replace('_', ' ')] = str(int(session[response.replace('_', ' ')]) - 1)
+    return response
+
+
+@app.route('/session/up', methods=['GET', 'POST'])
+@login_required
+def up_session():
+    response = request.get_data().decode('utf-8')
+    print(response)
+    session[response.replace('_', ' ')] = str(int(session[response.replace('_', ' ')]) + 1)
     return response
