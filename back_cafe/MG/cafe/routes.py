@@ -59,6 +59,7 @@ def logout():
 def order():
     if request.method == 'GET':
         total_price = 0
+        total_price_without_discount = 0
         counter = 0
         orders = []
         table = session['table']
@@ -69,14 +70,14 @@ def order():
             item = Menuitems.query.filter_by(name=k).first()
             if item:
                 counter += 1
-                total_price += (item.price - item.discount) * int(v)
-
+                total_price += ((item.price * (100 - item.discount)) / 100) * int(v)
+                total_price_without_discount += item.price * int(v)
                 orders.append(
                     Orders(table=table, number=int(v), status=False, user=current_user, menuitem=item, receipts=1))
-
+        final_discount = total_price_without_discount - total_price
         return render_template('order.html', orders=orders,
                                total_price=total_price,
-                               counter=counter, table=table)
+                               counter=counter, table=table, final_discount=final_discount)
 
 
 @app.route('/menu', methods=['GET', 'POST'])
@@ -121,10 +122,15 @@ def profile():
         receipt = Receipts(total_price=100, final_price=200, users=current_user.id)
         req = session.items()
         lst = []
+        table_id = session["table"]
+        tables = Tables.query.get(table_id)
+        tables.use = True
+        db.session.commit()
         for k, v in req:
             item = Menuitems.query.filter_by(name=k).first()
             if item:
-                order = Orders(tables=1, number=int(v), status=True, user=current_user, menuitem=item, receipt=receipt)
+                order = Orders(table=tables, number=int(v), status=True, user=current_user, menuitem=item,
+                               receipt=receipt)
                 db.session.add(order)
                 db.session.commit()
                 lst.append(k)
