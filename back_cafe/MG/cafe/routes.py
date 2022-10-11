@@ -58,15 +58,6 @@ def logout():
 @login_required
 def order():
 
-    if request.method == 'POST':
-        session['hello'] = 'world'
-        response = request.get_json()
-        res = make_response()
-        for k, v in response.items():
-            print(k,v)
-            session[k.replace('_', ' ')] = str(v)
-        return res
-
     if request.method == 'GET':
         total_price = 0
         counter = 0
@@ -85,7 +76,7 @@ def order():
 
         return render_template('order.html', orders=orders,
                                total_price=total_price,
-                               counter=counter,table = table)
+                               counter=counter, table=table)
 
 
 @app.route('/menu', methods=['GET', 'POST'])
@@ -94,7 +85,15 @@ def menu():
     menu_items = Menuitems.query.all()
     tables = Tables.query.all()
     list_of_category = list(set([item.category for item in menu_items]))
-    return render_template('menu.html', tables=tables, menu_items=menu_items, list_of_category=list_of_category)
+
+    req = session.items()
+    items = []
+    for k, v in req:
+        item = Menuitems.query.filter_by(name=k).first()
+        if item:
+            items.append(item)
+    return render_template('menu.html', tables=tables, menu_items=menu_items, list_of_category=list_of_category,
+                           items=items)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -139,4 +138,19 @@ def profile():
     return render_template("profile.html", form=form, orders=d)
 
 
+@app.route('/session/set', methods=['GET', 'POST'])
+@login_required
+def set_session():
+    response = request.get_json()
+    for k, v in response.items():
+        print(k, v)
+        session[k.replace('_', ' ')] = v
+    return response
 
+
+@app.route('/session/delete', methods=['GET', 'POST'])
+@login_required
+def del_session():
+    response = request.get_data().decode('utf-8')
+    session.pop(response.replace('_', ' '))
+    return response
