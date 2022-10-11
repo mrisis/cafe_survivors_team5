@@ -13,15 +13,14 @@
                            href="#list-Cake" role="tab" aria-controls="list-profile">Cakes</a>
                         <a class="list-group-item list-group-item-action" id="list-smoke-list" data-bs-toggle="list"
                            href="#list-Smoke" role="tab" aria-controls="list-profile">Smokes</a>
-                        <!--                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>-->
-                        <!--                    <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>-->
+
                     </div>
                 </div>
                 <!--Order-->
                 <div class="row h-100 justify-content-center ms-0">
                     <ul class="list-group mt-5 side_items">
 
-                        {%   for item in items %}
+                        {% for item,c in pack %}
 
                             <li id="{{ item.name|replace(' ', '_')+'_li' }}" class="list-group-item">
                                     <div class="row d-flex justify-content-between align-items-center">
@@ -31,7 +30,7 @@
 
                                         <div class="col-4 d-flex justify-content-center">
                                             <button id="down" class="btn btn-default" onclick="down('1','{{ item.name|replace(' ', '_')+'_item' }}')"><span class="glyphicon glyphicon-minus">-</span></button>
-                                            <input type="text" id="{{ item.name|replace(' ', '_')+'_item' }}" class="form-control" value="1" style="width: 85px"/>
+                                            <input type="text" id="{{ item.name|replace(' ', '_')+'_item' }}" class="form-control" value="{{ c }}" style="width: 85px"/>
                                             <button id="up" class="btn btn-default" onclick="up('20','{{ item.name|replace(' ', '_')+'_item' }}')"><span class="glyphicon glyphicon-plus">+</span></button>
                                         </div>
                                         <div class="col-4 d-flex justify-content-end">
@@ -201,7 +200,15 @@ var myDict = {};
             }`).removeClass('click');
 
         } else {
-            myDict["table"] = e.currentTarget.id.replace("table" , '')
+            let z ={}
+            z["table"] = e.currentTarget.id.replace("table" , '')
+            $.ajax({
+                url: "{{ url_for('set_session') }}",
+                type: 'POST',
+                data: JSON.stringify(z),
+                contentType: 'application/json'
+                })
+
             $(`#${
                     e.currentTarget.id
             }`).css('background-color', '#07c941');
@@ -250,6 +257,12 @@ var myDict = {};
         document.getElementById(item).value = parseInt(document.getElementById(item).value) + 1;
         if (document.getElementById(item).value >= parseInt(max)) {
             document.getElementById(item).value = max;
+        }else {
+            $.ajax({
+                url: "{{ url_for('up_session') }}",
+                type: 'POST',
+                data: item.replace('_item' , ''),
+                })
         }
     }
 
@@ -259,6 +272,13 @@ var myDict = {};
         if (document.getElementById(item).value <= parseInt(min)) {
             document.getElementById(item).value = min;
 
+
+        }else {
+            $.ajax({
+                url: "{{ url_for('down_session') }}",
+                type: 'POST',
+                data: item.replace('_item' , ''),
+                })
         }
     }
 
@@ -280,6 +300,7 @@ var myDict = {};
 
 
 })
+
 
    </script>
 
