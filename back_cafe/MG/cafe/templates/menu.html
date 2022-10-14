@@ -134,17 +134,36 @@
                 </form>
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close
                 </button>
-                <a type="button" id="make_order" href="{{ url_for('order') }}" class="btn btn-primary">Make Order</a>
+                <a type="button" id="make_order" onclick="make_order()" class="btn btn-primary">Make Order</a>
 
             </div>
         </div>
     </div>
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+	function make_order(){
+
+		$.ajax({
+			url: "{{ url_for('table_session') }}",
+			type: 'POST',
+
+			success: function (data) {
+			if(data == 'None') {
+				alert("You didn't select a table. Please select one to continue.")
+
+			}else {window.location.href = "http://127.0.0.1:5000/order"
+      }
+
+				}
+			})
+		}
+
+
    {%   for item in items %}
         $('#{{ item.name|replace(' ', '_') }}').addClass('disabled')
 
@@ -190,6 +209,13 @@ let myDict = {};
     $('.table').on('click', function (e) {
 
         if (e.currentTarget.className.includes("click")) {
+
+            $.ajax({
+                url: "{{ url_for('del_session') }}",
+                type: 'POST',
+                data: 'table',
+                })
+
 
             $(`#${
                     e.currentTarget.id
@@ -254,7 +280,7 @@ let myDict = {};
     function up(max, item) {
         myDict[item.replace('_item' , '')] = (myDict[item.replace('_item' , '')] || 1) + 1
         document.getElementById(item).value = parseInt(document.getElementById(item).value) + 1;
-        if (document.getElementById(item).value >= parseInt(max)) {
+        if (document.getElementById(item).value > parseInt(max)) {
             document.getElementById(item).value = max;
         }else {
             $.ajax({
@@ -268,7 +294,7 @@ let myDict = {};
     function down(min, item) {
         myDict[item.replace('_item' , '')] = (myDict[item.replace('_item' , '')] || 1) - 1
         document.getElementById(item).value = parseInt(document.getElementById(item).value) - 1;
-        if (document.getElementById(item).value <= parseInt(min)) {
+        if (document.getElementById(item).value < parseInt(min)) {
             document.getElementById(item).value = min;
 
 
