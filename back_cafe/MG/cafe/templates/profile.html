@@ -6,7 +6,6 @@
 
 {% block body %}
 
-    HTML
     <section class="bg-dark">
         <div class="container pb-5">
 
@@ -75,30 +74,63 @@
                         <div class="text-center">
 
                         <h3 class="text-light mb-5 border-bottom border-light border-1 w-50 mx-auto mt-5 pb-3">Your shopping
-                            cart</h3>
+                            carts</h3>
                         </div>
                         <br>
-                        {% for order in orders.values() %}
+                        {% for receipt, order in orders.items() %}
                             <div class="col-md-6">
                                 <div class="card mb-5">
                                     <div class="card-body text-dark">
+																			<div class="row d-flex">
+																				<div class="col-6">
+																					<p class="font-italic me-1 text-dark text-start ms-2">
+																						Code: {{ receipt.id }}
+																					</p>
+																				</div>
+																				<div class="col-6">
+																					<p class="font-italic me-1 text-end me-2">
+																						Date: {{ receipt.timestamp.date() }}
+																					</p>
+																				</div>
+																				</div>
                                         {% for item in order %}
                                             <div class="card text-light bg-dark my-2">
                                                 <div class="row d-flex text-center">
-                                                    <div class="col-6">
+                                                    <div class="col-4">
                                                         <p class="mb-4 mt-4"><span
-                                                            class="font-italic me-1">Name: {{ item.menuitem['name'] }}</span>
+                                                            class="font-italic me-1">{{ item.menuitem['name'][:10] }}</span>
                                                         </p>
                                                     </div>
-                                                    <div class="col-6">
+
+  																									<div class="col-4">
                                                         <p class="mb-4 mt-4"><span
-                                                            class="font-italic me-1">Price: {{ item.menuitem['price']|int }} T</span>
+                                                            class="font-italic me-1">{{ item.number }}</span>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <p class="mb-4 mt-4"><span
+																																{%set item_price = item.menuitem['price'] * (100 - item.menuitem['discount']) / 100 %}
+                                                            class="font-italic me-1">{{ item_price|int }} T</span>
                                                         </p>
                                                     </div>
                                                 </div>
-
-                                            </div>
+																							</div>
                                         {% endfor %}
+
+																		<div class="row d-flex mt-3">
+																				<div class="col-6">
+																					<p class="font-italic me-1 text-dark text-start ms-2">
+																						Total: {{ receipt.total_price }} T
+																					</p>
+																				</div>
+																				<div class="col-6">
+																					<p class="font-italic me-1 text-end me-2">
+																						Final: {{ receipt.final_price|int }} T
+																					</p>
+																				</div>
+																				</div>
+
 
                                     </div>
                                 </div>
