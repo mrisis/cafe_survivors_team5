@@ -25,6 +25,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
         flash("You signed up successfully", "success")
+        login_user(user)
         return redirect(url_for('home'))
     return render_template('signup.html', form=form)
 
@@ -51,6 +52,15 @@ def login():
 @login_required
 def logout():
     logout_user()
+
+    # Clearing session memory when we log out
+    lst = []
+    for i in session:
+        lst.append(i)
+
+    for j in lst:
+        session.pop(j)
+
     flash("you logged out account", 'danger')
     return redirect(url_for('home'))
 
@@ -77,6 +87,7 @@ def order():
                     Orders(table=table, number=int(v), status=False, user=current_user, menuitem=item, receipts=1))
         final_discount = total_price_without_discount - total_price
         session['total_price'] = total_price
+        session['total_price_without_discount'] = total_price_without_discount
         return render_template('order.html', orders=orders,
                                total_price=total_price,
                                counter=counter, table=table, final_discount=final_discount)
@@ -121,30 +132,12 @@ def profile():
         form.phone_number.data = current_user.phone_number
         form.last_name.data = current_user.last_name
 
-        receipt = Receipts(total_price=100, final_price=200, users=current_user.id)
-        req = session.items()
-        lst = []
-        table_id = session["table"]
-        tables = Tables.query.get(table_id)
-        tables.use = True
-        db.session.commit()
-        for k, v in req:
-            item = Menuitems.query.filter_by(name=k).first()
-            if item:
-                order = Orders(table=tables, number=int(v), status=True, user=current_user, menuitem=item,
-                               receipt=receipt)
-                db.session.add(order)
-                db.session.commit()
-                lst.append(k)
-
         d = {}
-        for i in lst:
-            session.pop(i)
-        for i in Receipts.query.filter_by(user=current_user):
-            d[i.id] = []
+        for i in Receipts.query.filter_by(user=current_user).order_by(Receipts.timestamp.desc()).all():
+            d[i] = []
             for j in Orders.query.filter_by(user=current_user):
                 if i.id == j.receipts:
-                    d[i.id].append(j)
+                    d[i].append(j)
 
     return render_template("profile.html", form=form, orders=d)
 
@@ -185,6 +178,15 @@ def up_session():
     return response
 
 
+@app.route('/session/table', methods=['GET', 'POST'])
+def table_session():
+    try:
+        return session['table']
+    except Exception as e:
+        print(e)
+        flash("You didn't select a table. Please select one.", 'info')
+        return 'None'
+
 # -*- coding: utf-8 -*-
 
 # Sample Flask ZarinPal WebGate with SOAP
@@ -193,8 +195,8 @@ __author__ = 'Mohammad Reza Kamalifard, Hamid Feizabadi'
 __url__ = 'reyhoonsoft.ir , rsdn.ir'
 __license__ = "GPL 2.0 http://www.gnu.org/licenses/gpl-2.0.html"
 
-MMERCHANT_ID = '41b3a452-5a8c-4f34-86d8-84ba6e87413d'  # Required
-ZARINPAL_WEBSERVICE = 'https://www.zarinpal.com/pg/services/WebGate/wsdl'  # Required  # Amount will be based on Toman  Required
+MMERCHANT_ID = '41b3a45225a8c34f34186d8484ba6e87413d'  # Required
+ZARINPAL_WEBSERVICE = 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl'  # Required  # Amount will be based on Toman  Required
 description = u'توضیحات تراکنش تستی'  # Required
 email = 'masoudpro2@gmail.com'  # Optional
 mobile = '09120572655'  # Optional
@@ -202,7 +204,7 @@ mobile = '09120572655'  # Optional
 
 @app.route('/request/')
 def send_request():
-    amount = 2000  # Toman / Required
+    amount = int(session['total_price'])  # Toman / Required
     client = Client(ZARINPAL_WEBSERVICE)
     result = client.service.PaymentRequest(MMERCHANT_ID,
                                            amount,
@@ -211,14 +213,14 @@ def send_request():
                                            mobile,
                                            str(url_for('verify', _external=True)))
     if result.Status == 100:
-        return redirect('https://www.zarinpal.com/pg/StartPay/' + result.Authority)
+        return redirect('https://sandbox.zarinpal.com/pg/StartPay/' + result.Authority)
     else:
         return 'Error'
 
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
-    amount = 2000  # Toman / Required
+    amount = int(session['total_price'])  # Toman / Required
     client = Client(ZARINPAL_WEBSERVICE)
     if request.args.get('Status') == 'OK':
         result = client.service.PaymentVerification(MMERCHANT_ID,
@@ -226,6 +228,31 @@ def verify():
                                                     amount)
         if result.Status == 100:
             flash('Transaction success. RefID: ' + str(result.RefID), 'success')
+
+            receipt = Receipts(total_price=session['total_price_without_discount'], final_price=session['total_price'],
+                               users=current_user.id)
+            req = session.items()
+            lst = []
+            table_id = session["table"]
+            tables = Tables.query.get(table_id)
+            tables.use = True
+            db.session.commit()
+            for k, v in req:
+                item = Menuitems.query.filter_by(name=k).first()
+                if item:
+                    order = Orders(table=tables, number=int(v), status=True, user=current_user, menuitem=item,
+                                   receipt=receipt)
+                    db.session.add(order)
+                    db.session.commit()
+                    lst.append(k)
+
+            # Clearing session memory
+            for i in lst:
+                session.pop(i)
+
+            session.pop('total_price')
+            session.pop('total_price_without_discount')
+
             return redirect(url_for('profile'))
         elif result.Status == 101:
             return 'Transaction submitted : ' + str(result.Status)
