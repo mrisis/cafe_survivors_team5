@@ -2,6 +2,7 @@ import os.path as op
 import warnings
 
 from functools import wraps
+from flask_login import current_user
 
 from flask import Blueprint, current_app, render_template, abort, g, url_for
 from cafe.flask_admin import babel
@@ -10,6 +11,7 @@ from cafe.flask_admin import helpers as h
 
 # For compatibility reasons import MenuLink
 from cafe.flask_admin.menu import MenuCategory, MenuView, MenuLink, SubMenuCategory  # noqa: F401
+
 
 
 def expose(url='/', methods=('GET',)):
@@ -464,7 +466,8 @@ class Admin(object):
                  static_url_path=None,
                  base_template=None,
                  template_mode=None,
-                 category_icon_classes=None):
+                 category_icon_classes=None,
+                 user=None):
         """
             Constructor.
 
@@ -514,7 +517,12 @@ class Admin(object):
         self.url = url or self.index_view.url
         self.static_url_path = static_url_path
         self.subdomain = subdomain
-        self.base_template = base_template or 'admin/base.html'
+
+
+
+
+
+
         self.template_mode = template_mode or 'bootstrap2'
         self.category_icon_classes = category_icon_classes or dict()
 
@@ -525,6 +533,8 @@ class Admin(object):
         if app is not None:
             self._init_extension()
 
+
+        self.base_template = base_template or 'admin/error_admin.html'
     def add_view(self, view):
         """
             Add a view to the collection.
@@ -749,3 +759,14 @@ class Admin(object):
             Return menu links.
         """
         return self._menu_links
+    def change_to_admin(self):
+        """
+            Change the current user to admin.
+        """
+        self.base_template = 'admin/base.html'
+
+    def change_to_user(self):
+        """
+            Change the current user to user.
+        """
+        self.base_template = 'admin/error_admin.html'
