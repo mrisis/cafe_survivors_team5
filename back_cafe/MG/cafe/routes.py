@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, jsonify, make_response, Response, session
 from flask_login import login_user, current_user, login_required, logout_user
-
+from cafe import admin
 from cafe import app, bcrypt, db
 from cafe.forms import SignupForm, LoginForm, UpdateProfileForm
 from cafe.models import Users, Menuitems, Orders, Tables, Receipts
@@ -9,6 +9,11 @@ from suds.client import Client
 
 @app.route('/')
 def home():
+    user = Users.query.get(current_user.id)
+    if user.admin:
+        admin.change_to_admin()
+    else:
+        admin.change_to_user()
     return render_template('home.html')
 
 
@@ -34,7 +39,11 @@ def signup():
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
+
+
+
         return redirect(url_for('home'))
+
 
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -42,6 +51,8 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash("You logged in successfully", "success")
+
+
             return redirect(next_page if next_page else url_for('home'))
         else:
             flash("Login Unsuccessful. Please check email and password", "danger")
