@@ -15,6 +15,7 @@ class Users(db.Model, UserMixin):
     phone_number = db.Column(db.String(11), unique=True, nullable=False)
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
+    admin=db.Column(db.Boolean, default=False)
     orders = db.relationship("Orders", backref="user", lazy=True)
     receipts = db.relationship("Receipts", backref="user", lazy=True)
 
