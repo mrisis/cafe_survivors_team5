@@ -1,13 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+from flask_login import LoginManager , current_user
 from cafe.flask_admin import Admin
 from cafe.flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "49f4d03ee119ec59346acb4c953a4220"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../cafe.db'
+
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
@@ -24,5 +25,7 @@ admin.add_view(ModelView(Menuitems, db.session))
 admin.add_view(ModelView(Orders, db.session))
 admin.add_view(ModelView(Tables, db.session))
 admin.add_view(ModelView(Receipts, db.session))
+
+
 
 from cafe import routes
