@@ -7,19 +7,28 @@ from cafe.models import Users, Menuitems, Orders, Tables, Receipts
 from suds.client import Client
 
 
+def admins():
+    try:
+        user = Users.query.get(current_user.id)
+        print(user)
+        if user.admin:
+            admin.change_to_admin()
+        else:
+            admin.change_to_user()
+    except Exception as e:
+        print(e)
+        pass
+
+
 @app.route('/')
 def home():
-    user = Users.query.get(current_user.id)
-    print(user)
-    if user.admin:
-        admin.change_to_admin()
-    else:
-        admin.change_to_user()
+    admins()
     return render_template('home.html')
 
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
+    admins()
     form = SignupForm()
     if form.validate_on_submit():
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -38,6 +47,7 @@ def signup():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    admins()
     form = LoginForm()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -58,6 +68,7 @@ def login():
 @app.route("/logout")
 @login_required
 def logout():
+    admins()
     logout_user()
 
     # Clearing session memory when we log out
@@ -75,6 +86,7 @@ def logout():
 @app.route('/order', methods=['POST', 'GET'])
 @login_required
 def order():
+    admins()
     if request.method == 'GET':
         total_price = 0
         total_price_without_discount = 0
@@ -103,6 +115,7 @@ def order():
 @app.route('/menu', methods=['GET', 'POST'])
 @login_required
 def menu():
+    admins()
     menu_items = Menuitems.query.all()
     tables = Tables.query.all()
     list_of_category = list(set([item.category for item in menu_items]))
@@ -123,6 +136,7 @@ def menu():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    admins()
     form = UpdateProfileForm()
     orders = Orders.query.filter_by(user=current_user)
     if form.validate_on_submit():
@@ -212,6 +226,7 @@ mobile = '09120572655'  # Optional
 
 @app.route('/request/')
 def send_request():
+    admins()
     amount = int(session['total_price'])  # Toman / Required
     client = Client(ZARINPAL_WEBSERVICE)
     result = client.service.PaymentRequest(MMERCHANT_ID,
@@ -228,6 +243,7 @@ def send_request():
 
 @app.route('/verify/', methods=['GET', 'POST'])
 def verify():
+    admins()
     amount = int(session['total_price'])  # Toman / Required
     client = Client(ZARINPAL_WEBSERVICE)
     if request.args.get('Status') == 'OK':
