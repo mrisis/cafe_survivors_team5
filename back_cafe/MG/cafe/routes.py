@@ -10,6 +10,7 @@ from suds.client import Client
 @app.route('/')
 def home():
     user = Users.query.get(current_user.id)
+    print(user)
     if user.admin:
         admin.change_to_admin()
     else:
@@ -39,11 +40,7 @@ def signup():
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
-
-
-
         return redirect(url_for('home'))
-
 
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -51,7 +48,6 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash("You logged in successfully", "success")
-
 
             return redirect(next_page if next_page else url_for('home'))
         else:
@@ -197,6 +193,7 @@ def table_session():
         print(e)
         flash("You didn't select a table. Please select one.", 'info')
         return 'None'
+
 
 # -*- coding: utf-8 -*-
 
