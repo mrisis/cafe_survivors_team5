@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request, jsonify, make_response, Response, session
+from flask import render_template, flash, redirect, url_for, request,  session
 from flask_login import login_user, current_user, login_required, logout_user
 from cafe import admin
 from cafe import app, bcrypt, db
